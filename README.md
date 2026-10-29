@@ -236,9 +236,9 @@ com permissões específicas para o uso cotidiano.
 | Variável | Valor local | Função |
 | --- | --- | --- |
 | `KIBANA_PASSWORD` | Aleatória no `.env` | Senha técnica hexadecimal com no mínimo 64 caracteres |
-| `KIBANA_BIND_IP` | `127.0.0.1` | IP de publicação do Kibana no host |
+| `KIBANA_BIND_IP` | `100.64.10.1` | IP Tailscale do servidor; para acesso local use `127.0.0.1` |
 | `KIBANA_PORT` | `5601` | Porta publicada; interna sempre 5601 |
-| `KIBANA_PUBLIC_URL` | `http://localhost:5601` | URL externa completa, sem barra final |
+| `KIBANA_PUBLIC_URL` | `http://100.64.10.1:5601` | URL externa completa, sem barra final |
 | `KIBANA_SECURE_COOKIES` | `false` | Use `true` quando o navegador acessar por HTTPS |
 | `KIBANA_MEMORY_LIMIT` | `2g` | Limite de memória do Kibana |
 | `KIBANA_SECURITY_KEY` | Aleatória no `.env` | Chave persistente das sessões |
@@ -252,7 +252,10 @@ cada chave. Preserve-as entre deploys e guarde cópias protegidas junto aos
 segredos da instalação. Perder a chave de objetos pode impedir sua descriptografia.
 
 Inicie tudo com `docker compose up -d --wait --wait-timeout 420` e abra
-`http://localhost:5601`. Para logs: `docker compose logs -f --tail 100 kibana`.
+`http://100.64.10.1:5601` em uma máquina autorizada no Tailscale. O IP precisa
+pertencer ao servidor. Para testar no Windows/local, configure
+`KIBANA_BIND_IP=127.0.0.1` e `KIBANA_PUBLIC_URL=http://localhost:5601`.
+Para logs: `docker compose logs -f --tail 100 kibana`.
 Para reiniciar somente a interface: `docker compose restart kibana`.
 
 Para acesso pelo domínio do Tunnel, ajuste no `.env`:
